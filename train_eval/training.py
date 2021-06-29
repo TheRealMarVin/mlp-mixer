@@ -3,7 +3,7 @@ from datetime import timedelta
 import torch
 import time
 
-from common.train_eval.eval import evaluate
+from train_eval.eval import evaluate
 
 
 def train(model, train_dataset, optimizer, criterion, scheduler, batch_size, n_epochs, shuffle, history, save_file,

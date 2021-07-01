@@ -49,16 +49,18 @@ def run_experiment():
 
     test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4)
 
-    model = MlpMixer(input_size=14,
-                     nb_blocks=1,
+    model = MlpMixer(image_input_size=28,
                      nb_channels=1,
+                     patch_size=7,
+                     nb_blocks=1,
                      out_size=10,
-                     hidden_size=196,
+                     hidden_size=20,
                      dropout=0.25)
+
     if torch.cuda.is_available():
         model = model.cuda()
 
-    criterion = nn.MSELoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     history = History()
@@ -68,6 +70,7 @@ def run_experiment():
 
     _, _, valid_loss = evaluate(model, test_loader, criterion)
     print("Done")
+
 
 if __name__ == '__main__':
     run_experiment()

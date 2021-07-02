@@ -31,7 +31,7 @@ def get_cifar10_sets(transform):
     return train_set, test_set
 
 def run_experiment():
-    n_epochs = 1
+    n_epochs = 200
     batch_size = 32
     learning_rate = 0.00005
 

@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+import numpy as np
+
 import os
 from os import path
 
@@ -29,7 +31,7 @@ def get_cifar10_sets(transform):
     return train_set, test_set
 
 def run_experiment():
-    n_epochs = 200
+    n_epochs = 1
     batch_size = 32
     learning_rate = 0.00005
 
@@ -70,7 +72,9 @@ def run_experiment():
     print('Finished Training')
 
     y_pred, y_true, valid_loss = evaluate(model, test_loader, criterion)
+    y_pred = np.array(y_pred).argmax(1)
     print(classification_report(y_true, y_pred))
+
     print("Done")
 
 

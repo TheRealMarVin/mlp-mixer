@@ -19,16 +19,19 @@ from train_eval.eval import evaluate
 from train_eval.history import History
 from train_eval.training import train
 
+
 def get_mnist_sets(transform):
     train_set = torchvision.datasets.MNIST(root='./data', train=True, download=True, transform=transform)
     test_set = torchvision.datasets.MNIST(root='./data', train=False, download=True, transform=transform)
     return train_set, test_set
+
 
 def get_cifar10_sets(transform):
     train_set = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
     test_set = torchvision.datasets.CIFAR10(root='./data', train=False, download=True, transform=transform)
 
     return train_set, test_set
+
 
 def run_experiment():
     n_epochs = 200

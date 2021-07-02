@@ -6,6 +6,7 @@ from os import path
 
 import torchvision
 from matplotlib.pyplot import imshow
+from sklearn.metrics import classification_report
 from torch import optim
 
 from torch.utils.data import SubsetRandomSampler
@@ -68,7 +69,8 @@ def run_experiment():
           true_index=1)
     print('Finished Training')
 
-    _, _, valid_loss = evaluate(model, test_loader, criterion)
+    y_pred, y_true, valid_loss = evaluate(model, test_loader, criterion)
+    print(classification_report(y_true, y_pred))
     print("Done")
 
 

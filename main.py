@@ -35,8 +35,8 @@ def get_cifar10_sets(transform):
 
 
 def run_experiment():
-    n_epochs = 1
-    batch_size = 32
+    n_epochs = 200
+    batch_size = 64
     learning_rate = 0.00005
 
     model_name = "mlp_mixer"
@@ -58,11 +58,11 @@ def run_experiment():
 
     model = MlpMixer(image_input_size=28,
                      nb_channels=1,
-                     patch_size=7,
+                     patch_size=4,
                      nb_blocks=1,
                      out_size=10,
-                     hidden_size=20,
-                     dropout=0.25)
+                     hidden_size=64,
+                     dropout=0.0)
 
     if torch.cuda.is_available():
         model = model.cuda()

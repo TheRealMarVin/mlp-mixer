@@ -9,8 +9,8 @@ from mlp_mixer.token_mixer import TokenMixer
 class MixerBlock(nn.Module):
     def __init__(self, image_input_size, nb_channels, patch_size, hidden_size, dropout):
         super(MixerBlock, self).__init__()
-        self.pre_norm_layer = nn.LayerNorm(int((patch_size * patch_size)))
-        self.post_norm_layer = nn.LayerNorm(int((patch_size * patch_size)))
+        self.pre_norm_layer = nn.LayerNorm(int(patch_size * patch_size))
+        self.post_norm_layer = nn.LayerNorm(int(patch_size * patch_size))
         self.token_mixer = TokenMixer(int((image_input_size * image_input_size) / (patch_size * patch_size)),
                                       hidden_size,
                                       nb_channels,

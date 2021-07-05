@@ -9,6 +9,7 @@ from os import path
 import torchvision
 from matplotlib.pyplot import imshow
 from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
 from torch import optim
 
 from torch.utils.data import SubsetRandomSampler
@@ -34,7 +35,7 @@ def get_cifar10_sets(transform):
 
 
 def run_experiment():
-    n_epochs = 200
+    n_epochs = 1
     batch_size = 32
     learning_rate = 0.00005
 
@@ -77,6 +78,7 @@ def run_experiment():
     y_pred, y_true, valid_loss = evaluate(model, test_loader, criterion)
     y_pred = np.array(y_pred).argmax(1)
     print(classification_report(y_true, y_pred))
+    print(confusion_matrix(y_true, y_pred))
 
     print("Done")
 

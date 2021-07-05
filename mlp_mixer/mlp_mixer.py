@@ -14,7 +14,7 @@ class MlpMixer(nn.Module):
         self.fc = nn.Linear(self.patch_size[0] * self.patch_size[1] * nb_channels, out_size)
 
         self.mixers = nn.ModuleList(
-            [MixerBlock(image_input_size, nb_channels, patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
+            [MixerBlock(image_input_size, nb_channels, self.patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
         )
 
     def _make_tuple(self, val):

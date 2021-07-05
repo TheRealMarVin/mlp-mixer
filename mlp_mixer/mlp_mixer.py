@@ -8,10 +8,7 @@ from mlp_mixer.mixer_block import MixerBlock
 class MlpMixer(nn.Module):
     def __init__(self, image_input_size, nb_channels, patch_size, nb_blocks, out_size, hidden_size, dropout):
         super(MlpMixer, self).__init__()
-        if type(patch_size) is tuple:
-            self.patch_size = patch_size
-        else:
-            self.patch_size = (patch_size, patch_size)
+        self.patch_size = self._make_tuple(patch_size)
 
         self.final_norm_layer = nn.LayerNorm(int(self.patch_size[0] * self.patch_size[1]))
         self.fc = nn.Linear(self.patch_size[0] * self.patch_size[1] * nb_channels, out_size)
@@ -19,6 +16,14 @@ class MlpMixer(nn.Module):
         self.mixers = nn.ModuleList(
             [MixerBlock(image_input_size, nb_channels, patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
         )
+
+    def _make_tuple(self, val):
+        if type(val) is tuple:
+            res = val
+        else:
+            res = (val, val)
+
+        return res
 
     def forward(self, x):
         x = self._create_patch(x)

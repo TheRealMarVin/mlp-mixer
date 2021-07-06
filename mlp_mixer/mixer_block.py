@@ -12,7 +12,7 @@ class MixerBlock(nn.Module):
         patch_area = int(patch_size[0] * patch_size[1])
         self.pre_norm_layer = nn.LayerNorm(patch_area)
         self.post_norm_layer = nn.LayerNorm(patch_area)
-        self.token_mixer = TokenMixer(int((image_input_size * image_input_size) / patch_area),
+        self.token_mixer = TokenMixer(int((image_input_size[0] * image_input_size[1]) / patch_area),
                                       hidden_size,
                                       dropout=dropout)
         self.channel_mixer = ChannelMixer(patch_area * nb_channels,

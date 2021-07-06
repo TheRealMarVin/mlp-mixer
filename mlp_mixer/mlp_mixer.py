@@ -9,12 +9,13 @@ class MlpMixer(nn.Module):
     def __init__(self, image_input_size, nb_channels, patch_size, nb_blocks, out_size, hidden_size, dropout):
         super(MlpMixer, self).__init__()
         self.patch_size = self._make_tuple(patch_size)
+        self.image_input_size = self._make_tuple(image_input_size)
 
         self.final_norm_layer = nn.LayerNorm(int(self.patch_size[0] * self.patch_size[1]))
         self.fc = nn.Linear(self.patch_size[0] * self.patch_size[1] * nb_channels, out_size)
 
         self.mixers = nn.ModuleList(
-            [MixerBlock(image_input_size, nb_channels, self.patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
+            [MixerBlock(self.image_input_size, nb_channels, self.patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
         )
 
     def _make_tuple(self, val):

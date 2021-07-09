@@ -11,7 +11,7 @@ class MlpMixer(nn.Module):
         self.patch_size = self._make_tuple(patch_size)
         self.image_input_size = self._make_tuple(image_input_size)
 
-        self.final_norm_layer = nn.LayerNorm(int(self.patch_size[0] * self.patch_size[1]))
+        self.final_norm_layer = nn.LayerNorm(int(self.patch_size[0] * self.patch_size[1] * nb_channels))
         self.fc = nn.Linear(self.patch_size[0] * self.patch_size[1] * nb_channels, out_size)
 
         self.mixers = nn.ModuleList(

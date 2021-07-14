@@ -73,5 +73,4 @@ dependencies:
   - pip:
     - future==0.18.2
     - thop==0.0.31-2005241907
-prefix: C:\Users\naked_000\anaconda3\envs\ml
 

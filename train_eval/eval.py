@@ -13,6 +13,7 @@ def reshape_prediction_for_compatibility(raw_output):
 
     return np.array(reshaped_res)
 
+
 def evaluate(model, iterator, criterion, true_index = 1):
     model.eval()
 
@@ -44,7 +45,6 @@ def evaluate(model, iterator, criterion, true_index = 1):
             all_true.extend(y_true.detach().cpu().numpy())
 
             epoch_loss += loss.item()
-
 
     return all_pred, all_true, epoch_loss / len(iterator)
 

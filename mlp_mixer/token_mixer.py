@@ -27,7 +27,7 @@ class TokenMixer(nn.Module):
             x = self.dropout(x)
 
         x = self.fc2(x)
-        x = self.activation(x)
+        # x = self.activation(x)
         if self.dropout is not None:
             x = self.dropout(x)
 

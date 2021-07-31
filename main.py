@@ -34,7 +34,19 @@ def get_cifar10_sets(train_transform, test_transform):
     return train_set, test_set
 
 
-def run_experiment():
+def run_experiment(img_size, model_loader_fct):
+    model = MlpMixer(image_input_size=img_size,
+                     nb_channels=1,
+                     patch_size=4,
+                     nb_blocks=4,
+                     out_size=10,
+                     hidden_size=256,
+                     dropout=0.1)
+
+    run_specific_experiment(model, model_loader_fct)
+
+
+def run_specific_experiment(model, model_loader_fct):
     n_epochs = 200
     batch_size = 64
     learning_rate = 0.00005
@@ -48,7 +60,6 @@ def run_experiment():
     save_file = "{}/best.model".format(out_folder)
 
     train_transform = transforms.Compose([
-
                                           transforms.RandomAffine(degrees=15, translate=(0.1, 0.1), scale=(0.9, 1.1)),
                                           transforms.ToTensor(),
                                           transforms.Normalize((0.1307,), (0.3081,))
@@ -56,20 +67,12 @@ def run_experiment():
     test_transform = transforms.Compose([transforms.ToTensor(),
                                          transforms.Normalize((0.1307,), (0.3081,))])
 
-    train_set, test_set = get_mnist_sets(train_transform, test_transform)
+    train_set, test_set = model_loader_fct(train_transform, test_transform)
     # train_set, test_set = get_cifar10_sets(train_transform, test_transform)
     # train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, num_workers=4,
     #                                            shuffle=True)
 
     test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False, num_workers=4)
-
-    model = MlpMixer(image_input_size=28,
-                     nb_channels=1,
-                     patch_size=4,
-                     nb_blocks=4,
-                     out_size=10,
-                     hidden_size=64,
-                     dropout=0.1)
 
     if torch.cuda.is_available():
         model = model.cuda()
@@ -91,4 +94,4 @@ def run_experiment():
 
 
 if __name__ == '__main__':
-    run_experiment()
+    run_experiment(img_size=28, model_loader_fct=get_mnist_sets)

@@ -6,8 +6,16 @@ from mlp_mixer.mixer_block import MixerBlock
 
 
 class MlpMixer(nn.Module):
-    def __init__(self, image_input_size, nb_channels, patch_size, nb_blocks, out_size, hidden_size, dropout):
+    def __init__(self, image_input_size, nb_channels, patch_size,
+                 nb_blocks, out_size, hidden_size, dropout,
+                 token_hidden_size=None, channel_hidden_size=None):
         super(MlpMixer, self).__init__()
+
+        if token_hidden_size is None:
+            token_hidden_size = hidden_size
+        if channel_hidden_size is None:
+            channel_hidden_size = hidden_size
+
         self.patch_size = self._make_tuple(patch_size)
         self.image_input_size = self._make_tuple(image_input_size)
 
@@ -16,7 +24,7 @@ class MlpMixer(nn.Module):
         self.fc = nn.Linear(hidden_size, out_size)
 
         self.mixers = nn.ModuleList(
-            [MixerBlock(self.image_input_size, nb_channels, self.patch_size, hidden_size, dropout) for _ in range(nb_blocks)]
+            [MixerBlock(self.image_input_size, nb_channels, self.patch_size, hidden_size, token_hidden_size, channel_hidden_size, dropout) for _ in range(nb_blocks)]
         )
 
     def _make_tuple(self, val):

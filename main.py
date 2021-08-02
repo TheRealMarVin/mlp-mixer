@@ -36,11 +36,11 @@ def get_cifar10_sets(train_transform, test_transform):
 
 def run_experiment(img_size, model_loader_fct):
     model = MlpMixer(image_input_size=img_size,
-                     nb_channels=1,
-                     patch_size=4,
+                     nb_channels=3,
+                     patch_size=8,
                      nb_blocks=4,
                      out_size=10,
-                     hidden_size=256,
+                     hidden_size=128,
                      dropout=0.1)
 
     run_specific_experiment(model, model_loader_fct)
@@ -67,8 +67,8 @@ def run_specific_experiment(model, model_loader_fct):
     test_transform = transforms.Compose([transforms.ToTensor(),
                                          transforms.Normalize((0.1307,), (0.3081,))])
 
-    train_set, test_set = model_loader_fct(train_transform, test_transform)
-    # train_set, test_set = get_cifar10_sets(train_transform, test_transform)
+    # train_set, test_set = model_loader_fct(train_transform, test_transform)
+    train_set, test_set = get_cifar10_sets(train_transform, test_transform)
     # train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, num_workers=4,
     #                                            shuffle=True)
 
@@ -94,4 +94,4 @@ def run_specific_experiment(model, model_loader_fct):
 
 
 if __name__ == '__main__':
-    run_experiment(img_size=28, model_loader_fct=get_mnist_sets)
+    run_experiment(img_size=32, model_loader_fct=get_mnist_sets)
